@@ -1,14 +1,24 @@
-import './globals.css'
+'use client';
+
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { Provider } from 'react-redux';
+import { store } from '../redux/store';
+import { ToastContainer } from 'react-toastify';
+import './globals.css';
+
+// create a client
+const queryClient = new QueryClient();
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.jsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head />
-      <body>{children}</body>
+      <body>
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>{children}</Provider>
+        </QueryClientProvider>
+        <ToastContainer />
+      </body>
     </html>
-  )
+  );
 }
